@@ -4,15 +4,18 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DATAStruc
 {
     public partial class Form1 : Form
     {
+        public const string StoreData = "Park.json";
         // parking slot
         private string[] parkingSlots;
         // waiting list
@@ -26,6 +29,14 @@ namespace DATAStruc
         public Form1()
         {
             InitializeComponent();
+            
+        }
+        public class ParkingData
+        {
+            public string[] ParkingSlots { get; set; }
+            public List<string> WaitingQueue { get; set; }
+            public List<string> ParkingHistory { get; set; }
+            public List<string> ParkedCars { get; set; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -39,6 +50,7 @@ namespace DATAStruc
         private void Form1_Load(object sender, EventArgs e)
         {
             parkingSlots = new string[parkingLotSize];
+            LoadData();
             UpdateUI();
         }
         private void ParkCar(string plateNumber)
@@ -70,6 +82,7 @@ namespace DATAStruc
             // add to waiting list
             waitingQueue.Enqueue(plateNumber);
             MessageBox.Show("Parking lot is full. Added to the waiting list.");
+            Save_Data();
             UpdateUI();
         }
         private void UnparkCar(string plateNumber)
@@ -109,7 +122,9 @@ namespace DATAStruc
                     }
                 }
             }
+            Save_Data();
             UpdateUI();
+
         }
         private void UpdateWaitingList()
         {
@@ -179,15 +194,36 @@ namespace DATAStruc
         }
         private void Save_Data()
         {
-            var data  = new
+            var data  = new ParkingData
             {
                 ParkingSlots = parkingSlots,
                 WaitingQueue= waitingQueue.ToList(),
-                parkingHistory =  parkingHistory.ToList(),
-                parkedCars = parkedCars.ToList(),
+                ParkingHistory =  parkingHistory.ToList(),
+                ParkedCars = parkedCars.ToList(),
             };
-            string json = JsonConvert.SerializeObject(data);
-            File.WriteAllText("Park.json", json);
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(StoreData, json);
+        }
+        private void LoadData()
+        {
+            if (File.Exists(StoreData))
+            {
+                var json = File.ReadAllText(StoreData);
+                var data = JsonConvert.DeserializeObject<ParkingData>(json);
+
+                
+                parkingSlots = data.ParkingSlots ?? new string[parkingLotSize];
+                waitingQueue = new Queue<string>(data.WaitingQueue ?? new List<string>());
+                parkingHistory = new Stack<string>((data.ParkingHistory ?? new List<string>()).AsEnumerable().Reverse());
+                parkedCars = new HashSet<string>(data.ParkedCars ?? new List<string>());
+
+                UpdateUI();
+            }
+            else
+            {
+                parkingSlots = new string[parkingLotSize];
+            }
+            
         }
     }
 }

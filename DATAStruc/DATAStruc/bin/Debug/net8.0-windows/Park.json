@@ -1,0 +1,25 @@
+{
+  "ParkingSlots": [
+    null,
+    "Boks",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "WaitingQueue": [],
+  "ParkingHistory": [
+    "Unparked|Earl|17/21",
+    "Unparked|Reniel|16/34",
+    "Parked|Earl|16/34",
+    "Parked|Boks|16/33",
+    "Parked|Reniel|16/33"
+  ],
+  "ParkedCars": [
+    "Boks"
+  ]
+}
