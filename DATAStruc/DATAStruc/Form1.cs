@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.DataFormats;
 
 namespace DATAStruc
 {
@@ -31,6 +32,7 @@ namespace DATAStruc
             InitializeComponent();
             
         }
+        
         public class ParkingData
         {
             public string[] ParkingSlots { get; set; }
@@ -49,6 +51,10 @@ namespace DATAStruc
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Login secondForm = new Login(this);
+            this.Hide();
+            secondForm.ShowDialog();
+            this.Show();
             parkingSlots = new string[parkingLotSize];
             LoadData();
             UpdateUI();

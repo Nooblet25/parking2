@@ -18,3 +18,5 @@ C:\Users\ME\source\repos\DATAStruc\DATAStruc\obj\Debug\net8.0-windows\ref\DATASt
 C:\Users\ME\source\repos\DATAStruc\DATAStruc\obj\Debug\net8.0-windows\DATAStruc.csproj.AssemblyReference.cache
 C:\Users\ME\source\repos\DATAStruc\DATAStruc\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 C:\Users\ME\source\repos\DATAStruc\DATAStruc\obj\Debug\net8.0-windows\DATAStruc.csproj.Up2Date
+C:\Users\ME\source\repos\DATAStruc\DATAStruc\obj\Debug\net8.0-windows\DATAStruc.Login.resources
+C:\Users\ME\source\repos\DATAStruc\DATAStruc\obj\Debug\net8.0-windows\DATAStruc.CreateAcc.resources
